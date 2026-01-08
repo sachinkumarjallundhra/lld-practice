@@ -1,0 +1,110 @@
+32. Design a Train Platform Management System
+
+Design a system that manages assignment of trains to platforms in a railway station and supports time-based queries, with a clean, extensible object-oriented design.
+
+At any time only one train can be assigned to a single platform.
+Methods
+TrainPlatformManager(int platformCount)
+- 1 ≤ platformCount ≤ 20
+- platforms are numbered 0 to platformCount-1
+
+String assignPlatform(String trainId, int arrivalTime, int waitTime)
+- trainId will always be non blank and globally unique.
+- 1 ≤ arrivalTime
+- 1 ≤ waitTime ≤ 30
+- departureTime = arrivalTime + waitTime - 1 + delay
+- delay will occur if no platform is available immediately at arrivalTime.
+- both arrivalTime and departureTime are inclusive.
+- i.e. if train A departs from platform p at time t,
+then another train B can't arrive at platform p before time t+1
+
+- you have to return two comma separated integers as string
+- platformNumber+","+delayTime (delay time is there in case no platform is free on train's arrival)
+- e.g. "4,6" i.e. train is assigned to platform 4 but it will have to wait 6 minutes before arrival.
+- "12,0" train is assigned platform 12 and it can park immediately after arrival.
+- you must assign a platform with lowest wait time.
+- if multiple platforms have minimum wait time, choose the one with lowest index.
+
+String getTrainAtPlatform(int platformNumber, int timestamp)
+- returns occupying trainId or "" if none.
+
+int getPlatformOfTrain(String trainId, int timestamp)
+- returns platform number (1..platformCount) or -1 if not on any platform at the timestamp.
+
+Examples
+
+	// Platforms: 0, 1, 2  (0-based)
+TrainPlatformManager mgr = new TrainPlatformManager(3);
+
+// 1) First arrivals — fill each platform once (all immediate, delay=0)
+mgr.assignPlatform("T1", 0, 5);   // → "0,0"
+// Explanation: P0 is empty at arrival 0 ⇒ no delay. Duration=5 ⇒ occupies [0..4].
+
+mgr.assignPlatform("T2", 2, 3);   // → "1,0"
+// Explanation: At arrival 2, P0 is busy ([0..4]), but P1 is free ⇒ no delay.
+// Duration=3 ⇒ occupies [2..4].
+
+mgr.assignPlatform("T3", 4, 4);   // → "2,0"
+// Explanation: At arrival 4, P0 busy ([0..4]) until the end of t=4,
+// P1 busy ([2..4]) until the end of t=4, but P2 is free ⇒ no delay.
+// Duration=4 ⇒ occupies [4..7].
+
+// 2) Handoff on P0 — immediate reuse as soon as it frees
+mgr.assignPlatform("T4", 5, 5);   // → "0,0"
+// Explanation: T1 ended at 4 ⇒ P0 is free from 5 onward ⇒ no delay.
+// Duration=5 ⇒ occupies [5..9].
+
+// 3) Set up a future tie on earliest free time
+mgr.assignPlatform("T5", 9, 1);   // → "1,0"
+// Explanation: Arrival=9. P0 is still busy at t=9 ([5..9]); P1 is free since t=5; P2 is free since t=8.
+// Choose lowest free index: P1. Duration=1 ⇒ occupies [9..9] (frees at 10).
+
+mgr.assignPlatform("T6", 9, 2);   // → "2,0"
+// Explanation: Still at arrival=9. Now P1 is taken by T5 ([9..9]); P0 busy ([5..9]); P2 is free.
+// Assign to P2 with no delay. Duration=2 ⇒ occupies [9..10] (frees at 11).
+
+// 4) Delayed assignment with tie-break among equal earliest frees
+mgr.assignPlatform("T7", 9, 3);   // → "0,1"
+// Detailed reasoning at arrival=9:
+//   - P0 is busy [5..9] ⇒ frees at 10  → candidate delay=1
+//   - P1 is now busy [9..9] ⇒ frees at 10 → candidate delay=1
+//   - P2 is busy [9..10] ⇒ frees at 11 → candidate delay=2
+// Minimum delay is 1, and both P0 and P1 tie. Choose the lowest index ⇒ P0.
+// Start time = 9 + 1 = 10; Duration=3 ⇒ occupies [10..12].
+
+// ---------- Quick timeline snapshot around t=9..10 ----------
+// P0: T1 [0..4], T4 [5..9], T7 [10..12]
+// P1: T2 [2..4], T5 [9..9]
+// P2: T3 [4..7], T6 [9..10]
+// -----------------------------------------------------------
+
+// ---------- Point-in-time platform queries ----------
+mgr.getTrainAtPlatform(0, 4);    // "T1"
+// P0 at t=4 is T1 (last occupied tick before freeing at 5).
+
+mgr.getTrainAtPlatform(0, 5);    // "T4"
+// Handoff: T1 ended at 4; T4 started at 5.
+
+mgr.getTrainAtPlatform(1, 9);    // "T5"
+// P1 exactly at t=9 is T5 ([9..9]).
+
+mgr.getTrainAtPlatform(2, 10);   // "T6"
+// P2 at t=10 is T6 ([9..10]).
+
+mgr.getTrainAtPlatform(0, 10);   // "T7"
+// T7 began after waiting 1 minute; occupies P0 [10..12].
+
+// ---------- Train-centric queries (platform index is 0-based) ----------
+mgr.getPlatformOfTrain("T7", 9);   // -1
+// T7 hasn't started yet at t=9 (it starts at 10 after 1-minute delay).
+
+mgr.getPlatformOfTrain("T7", 10);  // 0
+// At t=10, T7 is on P0 by construction.
+
+mgr.getPlatformOfTrain("T5", 10);  // -1
+// T5 occupied [9..9] only, so not present at t=10.
+
+mgr.getPlatformOfTrain("T6", 11);  // -1
+// T6 occupied [9..10]; at t=11 it has already departed.
+
+

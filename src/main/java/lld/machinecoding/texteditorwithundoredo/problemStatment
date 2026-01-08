@@ -1,0 +1,93 @@
+27. Design a Text Editor with Undo & Redo
+
+Build an in-memory text editor that stores text by rows (lines) and supports insertion, deletion, and history navigation via undo/redo.
+
+The document starts with zero rows and each row starts with zero columns (length = 0). Rows and columns are 0-indexed. Text never contains newline characters. Each operation targets one row.
+Methods
+1) void addText(int row, int column, String text)
+Insert text into the specified row at position column.
+Existing characters at/after column shift right.
+Input rules:
+text contains only: letters  [a-z], [A-Z] , space ' ', hyphen -.
+0 ≤ row ≤ current row count.
+If row == current row count, first append a new empty row, then insert (you cannot skip rows).
+0 ≤ column ≤ current column count of the target row (after creating it if new).
+text.length ≥ 1.
+Effects: only the targeted row changes.
+This operation pushes one entry onto the Undo history.
+After any successful addText, the Redo history is cleared.
+2) void deleteText(int row, int startColumn, int length)
+Delete exactly length characters from row, starting at startColumn.
+Input rules:
+0 ≤ row < current row count.
+1 ≤ length.
+0 ≤ startColumn + length ≤ current column count of that row.
+Effects: only the targeted row changes, empty rows remain (row count does not decrease).
+This operation pushes one entry onto the Undo history.
+After any successful deleteText, the Redo history is cleared.
+3) void undo()
+Revert the most recent change (addText or deleteText) that has not yet been undone.
+If there is no change to undo, undo() is a no-op.
+The reverted change is pushed onto the Redo stack.
+4) void redo()
+Reapply the most recently undone change.
+If no undone change exists, redo() is a no-op.
+After any new edit (addText or deleteText) since the last undo(), the Redo stack is cleared and redo() will have no effect until another undo().
+The reapplied change is pushed back onto the Undo stack.
+5) String readLine(int row)
+Return the entire content of the specified row.
+Rules:  0 ≤ row < current row count.
+Returns "" if the row exists but is currently empty.
+Hint: Use command design pattern and stacks to implement undo and redo operations.
+Assumptions
+All inputs respect constraints (no need to handle invalid indices).
+Document may contain empty rows; these are valid and readable ("").
+No trimming or normalization; spaces and hyphens are preserved exactly.
+Examples
+Assume the editor starts with 0 rows.
+
+Example 1 - Creating Rows and Appending Text
+addText(0, 0, "hello") → creates row 0 with hello
+readLine(0) → hello
+addText(1, 0, "world") → appends new row 1 with world
+readLine(1) → world
+Example 2 - Insert in Middle, Delete, Undo/Redo
+(Starting rows) 0: "hello, 1: "world
+addText(0, 5, "-there") → row 0 becomes hello-there
+readLine(0) → hello-there
+deleteText(0, 5, 6) → delete -there, row 0 becomes hello
+readLine(0) → hello
+undo() → restore -there, row 0: hello-there
+readLine(0) → hello-there
+redo() → re-apply delete, row 0: hello
+readLine(0) → hello
+Example 3 - Insert into Middle of Line
+(Start) row 1 = world
+addText(1, 5, "-wide web") → row 1 becomes world-wide web
+readLine(1) → world-wide web
+deleteText(1, 5, 5) → delete -wide, row 1: world web
+undo() → restore -wide, row 1: world-wide web
+readLine(1) → world-wide web
+Example 4 - Multiple Undos, Redo Cleared by New Edit
+(Start) row 0 = hello
+addText(0, 5, "!") → hello!
+addText(0, 6, "!") → hello!!
+undo() → revert second add → hello!
+undo() → revert first add → hello
+redo() → reapply first add → hello!
+addText(0, 6, "?") → hello!? (clears Redo)
+redo() → no-op (Redo is empty)
+readLine(0) → hello!?
+Example 5 - Deleting From Start, Empty Row Persists
+addText(0, 0, "aa bb-cc") → row 0: aa bb-cc
+deleteText(0, 0, 8) → delete entire content, row 0:
+readLine(0) →
+undo() → restore aa bb-cc
+readLine(0) → aa bb-cc
+Example 6 - Inserting at Column 0 (Prefix Insert)
+addText(1, 0, "world") → row 1: world
+addText(1, 0, "hello-") → insert at start, row 1: hello-world
+readLine(1) → hello-world
+
+
+

@@ -1,0 +1,77 @@
+30. Design a File System (cd with '*')
+
+Design and implement an in-memory unix filesystem shell that supports three commands:
+- mkdir <path>,
+- pwd, and
+- cd <path> (with a special wildcard segment *).
+Scope & Environment
+Start in the root directory /.
+Paths can be absolute (start with /) or relative (no leading /).
+Path separator is /. Multiple consecutive slashes should be treated as a single /.
+Valid path segments are arbitrary non-empty strings except . and .. which have standard semantics:
+. = current directory
+.. = parent directory (root’s parent is itself)
+Methods
+1) String pwd()
+returns the absolute path of the current directory.
+Root returns / (no trailing slash).
+For non-root: join segments with / (no trailing slash), e.g. /a/b/c
+2) void mkdir(String path)
+Create the final directory in <path>.
+If <path> is absolute, creation is anchored at /.
+If <path> is relative, creation is anchored at the current directory.
+path will only contain: ( . , .. , a-z, / ). It will never contain *
+Parents auto-created (like mkdir -p): missing intermediate segments are created.
+Creating an already-existing directory is a no-op (idempotent).
+It is not valid to create . or .. as literal directory names in <path>.
+3) void cd(String path)
+Change the current directory to <path>.
+Accept both absolute and relative paths.
+Normalize . and .. while traversing.
+If any segment in traversal does not resolve to an existing directory, the command fails and the current directory remains unchanged.
+Special wildcard segment: *
+* is allowed as a path segment and matches exactly one segment at that position.
+Match set (at that traversal point): { ".", ".." } ∪ { all direct child directory names }.
+Deterministic choice rule
+(to guarantee a working solution):
+Prefer a child directory; if multiple, pick the lexicographically smallest child name.
+If no child directories exist, prefer . (no-op).
+If still applicable, fall back to .. (root’s parent is root).
+Rationale: cd operates on a single path; expanding * to multiple candidates is not a viable cd behavior.
+The above rule enforces a single, repeatable resolution.
+Examples:
+Start state:
+
+CWD: /
+pwd → /
+mkdir /a/b/c
+
+Creates /a, /a/b, /a/b/c (parents auto-created).
+pwd → /
+cd a/b
+
+CWD: /a/b
+pwd → /a/b
+cd *
+
+At /a/b, children = { c }.
+Match set = { ., .., c }.
+Prefer child → c.
+CWD: /a/b/c
+cd ../*
+
+From /a/b/c, first .. → /a/b.
+Now * at /a/b: prefer child c.
+CWD: /a/b/c (unchanged effectively).
+cd / * (space added for readability; equivalent to cd /*)
+
+At /, if there are children (e.g., a), * chooses lexicographically smallest child (e.g., a), so CWD becomes /a.
+If / has no children:
+
+cd * at / → no children, prefer . → stay at /.
+Error case:
+
+cd /nope/*/x where /nope doesn’t exist → fail, CWD unchanged.
+
+
+

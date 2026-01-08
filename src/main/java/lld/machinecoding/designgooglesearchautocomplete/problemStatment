@@ -1,0 +1,46 @@
+10642. Design Google Search Autocomplete
+
+Build an autocomplete feature for a search tool. Users enter a sentence (with at least one word, ending with the special character #). For each character typed except '#', return the top 3 most frequent historical sentences starting with the current input prefix. Follow these rules:
+The popularity of a sentence is the number of times it has been previously entered.
+Return the top 3 sentences sorted by popularity (highest first). If multiple sentences share the same popularity, sort them by ASCII order (lower ASCII first).
+If fewer than 3 matching sentences exist, return all of them.
+When the input character is the special character #, treat it as the end of the current sentence and return an empty list.
+Implement these two methods:
+
+SearchAutocomplete(String[] phrases, int[] counts): Constructor that initializes the system with historical data. phrases contains sentences typed before, and counts contains how many times each sentence was typed.
+List<String> getSuggestions(char ch): Processes the next character ch typed by the user. The character can be a lowercase letter (a-z), a space (' '), or #. When # is typed, save the current input as a new historical phrase. Return the top 3 matching sentences based on the prefix typed so far.
+Examples
+SearchAutocomplete autocomplete = new SearchAutocomplete(
+    new String[] {"hello world", "hi there", "hello", "hi world"},
+    new int[] {4, 3, 2, 2}
+);
+
+autocomplete.getSuggestions('h');
+// Returns ["hello world", "hi there", "hello"]
+// Explanation:
+// Sentences starting with "h" are four; the top three by frequency are "hello world"(4), "hi there"(3), and "hello"(2).
+// "hi world"(2) is excluded because only three suggestions are needed.
+
+autocomplete.getSuggestions('i');
+// Returns ["hi there", "hi world"]
+// Explanation:
+// Sentences starting with "hi" are "hi there"(3) and "hi world"(2).
+
+autocomplete.getSuggestions(' ');
+// Returns []
+// Explanation:
+// No sentences start with "hi ".
+
+autocomplete.getSuggestions('#');
+// Returns []
+// Explanation:
+// The input "hi " ends here and is stored as a new sentence with frequency 1.
+
+Constraints
+Input phrases start with a lowercase letter and end with #.
+Maximum number of stored sentences will not exceed 120.
+Each sentence length will be at most 90 characters.
+Only single spaces separate words in each sentence.
+
+
+

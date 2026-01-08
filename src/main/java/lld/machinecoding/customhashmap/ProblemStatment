@@ -1,0 +1,137 @@
+43. Design a Custom HashMap
+
+Design an in-memory Custom HashMap that stores String keys and String values.
+You must implement buckets, a custom hash, collision handling (multiple keys in the same bucket), and rehashing (resizing and redistributing entries).
+Goal of this problem is to force you to do a custom hashmap implementation, So don't use any inbuilt set/map/dictionary in your implementation.
+
+Hashing & Buckets
+hash(key) = (key.length() ^ 2) + sum(charValue), where a=1, b=2, ..., z=26.
+bucketIndex = hash(key) % bucketsCount. If two different keys produce the same bucketIndex, they go into the same bucket.
+Initial bucketsCount is 2 (bucket indices: 0 and 1).
+Example: key = "abcd"
+hash = 4*4 + (1+2+3+4) = 26. If bucketsCount=4 then bucketIndex = 26 % 4 = 2.
+
+Load Factor & Rehashing
+LoadFactor = round2(size / bucketsCount) where round2(x) = Math.round(x * 100.0) / 100.0.
+Constructor params minLoadFactor and maxLoadFactor are stored after rounding to 2 decimals. (minLoadFactor < maxLoadFactor)
+After each put() and remove(), check rehashing:
+If LoadFactor is strictly greater than maxLoadFactor, grow by doubling buckets: 2 → 4 → 8 → ... until valid.
+If LoadFactor is strictly less than minLoadFactor, shrink by halving buckets until valid, but never below 2.
+Rehashing means: create new buckets and re-insert all existing entries using hash(key) % newBucketsCount.
+- all double values should be rounded to two decimal points.
+- use Math.round(value * 100.0) / 100.0 or ((long)(value*100+0.5))/100.0
+Methods
+CustomHashMap(double minLoadFactor, double maxLoadFactor)
+void put(String key, String value)
+key and value length: 1 to 20
+key contains only a-z
+If key already exists, update its value (size does not increase).
+String get(String key) — returns value, or "" (empty string) if not found.
+String remove(String key) — removes entry and returns removed value, or "" (empty string) if not found.
+List<String> getBucketKeys(int bucketIndex)
+If bucketIndex is invalid (<0 or ≥ bucketsCount) return empty list.
+Return all keys currently in that bucket, sorted in lexicographically ascending order.
+int size() — number of entries currently stored.
+int bucketsCount() — current number of buckets.
+Examples
+Example 1: Basic put/get/update/remove
+
+CustomHashMap map = new CustomHashMap(0.25, 0.75);
+
+map.put("a", "one");
+map.put("bb", "two");
+
+map.get("a")        => "one"
+map.get("x")        => ""
+
+map.put("a", "ONE");   // update existing key
+map.get("a")        => "ONE"
+
+map.remove("bb")    => "two"
+map.remove("bb")    => ""    // already removed
+map.size()          => 1
+
+Example 2: Bucket inspection + collisions (same bucketIndex)
+
+CustomHashMap map = new CustomHashMap(0.25, 0.75);  // bucketsCount initially 2
+
+// bucketIndex = hash(key) % 2
+// hash("a")  = 1*1 + 1  = 2  => 2%2 = 0
+// hash("c")  = 1*1 + 3  = 4  => 4%2 = 0   (collision: same bucketIndex)
+
+map.put("a", "v1");
+map.put("c", "v2");
+
+map.getBucketKeys(0) => ["a", "c"]
+map.getBucketKeys(1) => []
+map.getBucketKeys(2) => []   // out of bounds
+
+Example 3: Rehash grow (exceeds maxLoadFactor)
+
+CustomHashMap map = new CustomHashMap(0.25, 0.75);  // bucketsCount = 2
+
+map.put("a", "1");    // size=1, LF=round2(1/2)=0.50  (ok)
+map.put("b", "2");    // size=2, LF=round2(2/2)=1.00  (> 0.75) => grow
+// after grow: bucketsCount becomes 4 (and entries are rehashed)
+
+map.bucketsCount() => 4
+map.size()         => 2
+
+Rehashing Example (2 → 4 → 8) with 5 inserts
+Assume: CustomHashMap map = new CustomHashMap(0.25, 0.75)
+- Initial bucketsCount = 2
+- LoadFactor = round2(size / bucketsCount)
+- Grow rehash when LoadFactor > maxLoadFactor (strictly greater)
+
+Hash + Bucket Index changes as bucketsCount grows
+Recall: hash(key) = (len*len) + sum(a=1..z=26), bucketIndex = hash % bucketsCount
+
+Step-by-step inserts and rehash triggers
+
+CustomHashMap map = new CustomHashMap(0.25, 0.75);
+// bucketsCount = 2
+
+put("a",    "1");   // size=1, LF=round2(1/2)=0.50  -> no rehash
+put("bb",   "2");   // size=2, LF=round2(2/2)=1.00  -> 1.00 > 0.75 => REHASH GROW to 4
+
+// After rehash to 4 buckets, entries redistribute using (hash % 4):
+// "a"  : 2%4  = 2
+// "bb" : 8%4  = 0
+
+put("abcd", "3");   // size=3, buckets=4, LF=round2(3/4)=0.75 -> not greater => no rehash
+// "abcd" goes to 26%4 = 2 (collision with "a" in bucket 2)
+
+put("m",    "4");   // size=4, buckets=4, LF=round2(4/4)=1.00 -> 1.00 > 0.75 => REHASH GROW to 8
+
+// Key movement highlight:
+// before grow (4 buckets): "m" was in bucket 14%4 = 2
+// after  grow (8 buckets): "m" moves to bucket 14%8 = 6
+
+put("zzz",  "5");   // size=5, buckets=8, LF=round2(5/8)=0.63 -> no rehash
+
+Concrete bucket contents after final step (bucketsCount = 8)
+
+bucketsCount() => 8
+size()         => 5
+
+Bucket 0: ["bb"]               // 8%8 = 0
+Bucket 2: ["a", "abcd"]        // 2%8 = 2 and 26%8 = 2 (same bucketIndex => collision)
+Bucket 6: ["m"]                // 14%8 = 6
+Bucket 7: ["zzz"]              // 87%8 = 7
+
+getBucketKeys(2) => ["a", "abcd"]   // lexicographically sorted
+getBucketKeys(6) => ["m"]
+getBucketKeys(7) => ["zzz"]
+getBucketKeys(1) => []
+
+Example 4: Rehash shrink (falls below minLoadFactor)
+
+CustomHashMap map = new CustomHashMap(0.50, 0.75);
+
+// Suppose map currently has bucketsCount=8 and size=3
+// LF=round2(3/8)=0.38 (< 0.50) => shrink to 4, rehash
+// Now LF=round2(3/4)=0.75 (valid), stop shrinking
+
+
+
+

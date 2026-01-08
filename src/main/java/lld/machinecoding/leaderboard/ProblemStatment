@@ -1,0 +1,49 @@
+31. Design a Leaderboard for Fantasy Teams
+
+Build an in-memory leaderboard for a fantasy-sports style app. Each user creates exactly one team made up of one or more players. As a live match progresses, players receive positive or negative points. A user’s score is the sum of the current scores of all players on that user’s team. You must support querying the Top-K users ranked by score.
+
+Rules
+Every user has exactly one team; teams contain one or more player IDs.
+A player may belong to multiple users’ teams (many-to-many relation).
+Each user’s initial score is 0 (before any player points are applied).
+Player score updates are deltas and may be negative or positive.
+User score = sum of scores of all players currently in that user’s team.
+Leaderboard ordering:
+Primary: user score in descending order (higher is better).
+Tie-break: userId in lexicographically ascending order.
+Methods
+void addUser(String userId, List<String> playerIds)
+userId will always be globally unique and non-blank.
+playerIds will contain at least one element; each playerId is non-blank and valid.
+Effect: registers a new user with their team and an initial score of 0.
+Players may already have accrued points from prior updates; the user’s score should immediately reflect the current player scores after registration.
+void addScore(String playerId, int score)
+Updates the specified player’s cumulative score by the given delta.
+score is an integer in the inclusive range [-1000, 1000].
+All users whose team includes playerId must have their team scores updated accordingly.
+Leaderboard ordering must remain consistent with the updated scores.
+List<String> getTopK(int k)
+k >= 1. If k exceeds the total number of users, return all users.
+Return the list of userId values sorted by:
+Score descending, then
+userId lexicographically ascending to break ties.
+Example
+
+// Sequence (illustrative):
+
+addUser("uA", ["p1", "p2"])
+addUser("uB", ["p2"])
+getTopK(2)              // ["uA", "uB"]  // both 0; "uA" < "uB"
+
+addScore("p2", 10)      // p2 = 10; uA=10 (p1=0 + p2=10), uB=10
+getTopK(2)              // ["uA", "uB"]  // tie by score, lex by userId
+
+addScore("p1", 3)       // p1 = 3; uA=13, uB=10
+getTopK(1)              // ["uA"]
+
+addScore("p2", -5)      // p2 = 5; uA=8 (3+5), uB=5
+getTopK(5)              // return all users: ["uA", "uB"]
+
+
+
+

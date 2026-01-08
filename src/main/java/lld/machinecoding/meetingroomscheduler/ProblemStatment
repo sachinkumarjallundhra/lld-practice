@@ -1,0 +1,128 @@
+44. Design a Meeting Room Scheduler - List Bookings
+
+Design an in-memory Meeting Room Scheduler that allows employees to view available rooms, book a room for a time interval, cancel a booking, and list bookings by room or by employee.
+Core Rules
+Rooms are identified by integer IDs: 0 to roomsCount - 1.
+Employees are identified by integer IDs: 0 to employeesCount - 1.
+A booking reserves exactly one room for exactly one employee during a time interval.
+Time interval convention: treat a booking as [startTime, endTime].
+Both startTime and endTime are inclusive
+This means: Meeting intervals [10, 20] and [20, 30] do overlap each other.
+No double-booking: the same room cannot have overlapping bookings.
+Methods
+constructor: MeetingRoomScheduler(int roomsCount, int employeesCount)
+Initializes an in-memory scheduler with a fixed set of rooms and employees.
+roomsCount > 0, employeesCount > 0.
+room ids's are between 0 and roomsCount-1
+employee id's are between 0 and employeesCount-1
+boolean bookRoom(String bookingId, int employeeId, int roomId, int startTime, int endTime)
+Attempts to create a booking for the given room and employee.
+bookingId is always unique and non-blank.
+employeeId and roomId are always valid.
+Invalid time range: if startTime > endTime, or startTime<0 then return false.
+If the room has no overlapping booking in [startTime, endTime], create the booking and return true.
+If the room already has an overlapping booking, return false (do not partially add anything).
+List<Integer> getAvailableRooms(int startTime, int endTime)
+Returns the list of room IDs that are free for the entire interval.
+Invalid time range: if startTime > endTime, return an empty list.
+Return room IDs in ascending order.
+boolean cancelBooking(String bookingId)
+Cancels an existing booking by its ID.
+Return true if a booking with this ID existed and was removed.
+Return false if the booking ID does not exist (no-op).
+List<String> listBookingsForRoom(int roomId)
+Returns a list of booking IDs for that room (or empty list).
+Return booking IDs sorted by startTime and then by bookingId in ascending order.
+List<String> listBookingsForEmployee(int employeeId)
+Returns a list of booking IDs for that employee (or empty list).
+Return booking IDs sorted by startTime and then by bookingId in ascending order.
+Examples:
+Example 1: Availability, overlap (same room), boundary conflict, different-room overlap, cancel, listing
+
+MeetingRoomScheduler s = new MeetingRoomScheduler(2, 2);  // rooms: 0,1  employees: 0,1
+
+s.getAvailableRooms(10, 20)
+=> [0, 1]
+
+s.bookRoom("b1", 0, 0, 10, 20)
+=> true
+
+s.bookRoom("b2", 1, 0, 15, 25)
+=> false   // same room overlap
+
+s.bookRoom("b3", 1, 0, 20, 30)
+=> false   // boundary overlaps because intervals are CLOSED (time=20 is shared)
+
+s.bookRoom("b4", 1, 0, 21, 30)
+=> true    // no overlap with [10,20]
+
+s.bookRoom("b5", 0, 1, 15, 25)
+=> true    // allowed: different room can overlap in time
+
+s.getAvailableRooms(20, 20)
+=> []      // at time=20: room0 busy (b1), room1 busy (b5)
+
+s.listBookingsForRoom(0)
+=> ["b1", "b4"]
+
+s.listBookingsForRoom(1)
+=> ["b5"]
+
+s.listBookingsForEmployee(0)
+=> ["b1", "b5"]
+
+s.listBookingsForEmployee(1)
+=> ["b4"]
+
+s.cancelBooking("b2")
+=> false   // booking never existed
+
+s.cancelBooking("b1")
+=> true
+
+s.cancelBooking("b1")
+=> false   // already cancelled
+
+s.getAvailableRooms(10, 20)
+=> [0]     // room0 now free for [10,20]; room1 still overlaps due to b5
+
+Example 2: Edge cases: invalid interval, instant booking, “no rooms available”, cancel non-existent
+
+MeetingRoomScheduler s = new MeetingRoomScheduler(1, 1);  // room: 0  employee: 0
+
+s.listBookingsForRoom(0)
+=> []
+
+s.listBookingsForEmployee(0)
+=> []
+
+s.bookRoom("x1", 0, 0, 50, 49)
+=> false   // invalid: startTime > endTime
+
+s.getAvailableRooms(70, 10)
+=> []      // invalid query interval
+
+s.bookRoom("x2", 0, 0, 60, 60)
+=> true    // valid instant booking at time=60 (closed interval)
+
+s.getAvailableRooms(60, 60)
+=> []      // room0 is busy at time=60
+
+s.bookRoom("x3", 0, 0, 61, 61)
+=> true    // does NOT overlap with [60,60]
+
+s.bookRoom("x4", 0, 0, 60, 61)
+=> false   // overlaps with x2 at 60 AND x3 at 61 (closed interval)
+
+s.cancelBooking("does-not-exist")
+=> false
+
+s.cancelBooking("x2")
+=> true
+
+s.getAvailableRooms(60, 60)
+=> [0]     // now free at time=60
+
+
+
+

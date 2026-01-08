@@ -1,0 +1,21 @@
+Complete in-memory database implementation:
+
+Level 1 : Support basic operations to manipulate records, fields, and values within fields.
+Level 2: Support displaying a record's fields based on a filter.
+Level 3: Support TTL settings for records.
+Level 4: Support Look-back operations to retrieve values stored at a specific timestamp in the past.
+
+You need to complete each level to unlock/prceed to the next level.
+
+Interface Skeleton:
+
+public void set(int timestamp, String key, String field, String value) {}
+public boolean compareAndSet(int timestamp, String key, String field, int expectedValue) {}
+public boolean compareAndDelete(int timestamp, String key, String field, int expectedValue) {}
+public String get(int timestamp, String key, String field) {}
+
+public List scan(int timestamp, String key) {}
+public List scanByPrefix(int timestamp, String key, String prefix) {}
+
+public void setWithTTL(int timestamp, String key, String field, String value, int ttl) {}
+public boolean compareAndSetWithTTL(int timestamp, String key, String field, int expectedValue, int newValue, int ttl) {}
