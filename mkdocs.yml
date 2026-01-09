@@ -1,0 +1,19 @@
+site_name: LLD Practice – Machine Coding
+site_description: Low Level Design problems with clean explanations and Java solutions
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - Machine Coding:
+      - Car Rental System: machine-coding/car-rental-system.md
+      - Rate Limiter: machine-coding/rate-limiter.md
+      - Text Editor (Undo/Redo): machine-coding/text-editor.md
+      - Snake Game: machine-coding/snake-game.md
+      - Tic Tac Toe: machine-coding/tic-tac-toe.md
+      - Banking System: machine-coding/banking-system.md
+      - In-Memory Database: machine-coding/in-memory-database.md
+
+
+markdown_extensions:
+  - pymdownx.superfences

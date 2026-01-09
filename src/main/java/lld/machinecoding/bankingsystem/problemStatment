@@ -1,0 +1,21 @@
+Complete banking system implementation:
+
+Level 1 (Basic Operations):
+
+boolean createAccount(String accountId, int timestamp) - Create new accounts
+Optional deposit(String accountId, int timestamp, int amount) - Deposit money into accounts
+Optional transfer(String fromId, String toId, int timestamp, int amount) - Transfer money between accounts
+
+Level 2 (Ranking):
+
+List topSpenders(int timestamp, int n) - Returns top N accounts based on outgoing transactions, sorted by amount (descending) and then by account ID (ascending)
+
+Level 3 (Scheduled Payments):
+
+void schedulePayment(String accountId, String targetAccId, int timestamp, int amount, double cashbackPercentage) - Schedule payments with cashback
+String getPaymentStatus(String accountId, int timestamp, String paymentId) - Check if payment is scheduled, processed, or failed
+void processScheduledPayments(int currentTimestamp) - Execute scheduled payments and apply cashback
+
+Level 4 (Account Merging):
+
+void mergeAccounts(String accountId1, String accountId2) - Merge two accounts, combining balances and updating all transaction histories
