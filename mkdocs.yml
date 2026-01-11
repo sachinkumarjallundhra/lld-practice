@@ -15,6 +15,7 @@ nav:
       - In-Memory Database: machine-coding/in-memory-database.md
       - Meeting Room Reservation: machine-coding/meeting-room-reservation.md
       - File System (cd with wildcard): machine-coding/file-system-cd-wildcard.md
+      - Fantasy Leaderboard: machine-coding/fantasy-leaderboard.md
 
 
 markdown_extensions:
