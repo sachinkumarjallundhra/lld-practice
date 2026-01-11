@@ -1,0 +1,1319 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Low Level Design problems with clean explanations and Java solutions">
+      
+      
+      
+      
+        <link rel="prev" href="../meeting-room-reservation/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>File System (cd with wildcard) - LLD Practice – Machine Coding</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#design-a-file-system-cd-with-wildcard" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LLD Practice – Machine Coding" class="md-header__button md-logo" aria-label="LLD Practice – Machine Coding" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LLD Practice – Machine Coding
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              File System (cd with wildcard)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LLD Practice – Machine Coding" class="md-nav__button md-logo" aria-label="LLD Practice – Machine Coding" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LLD Practice – Machine Coding
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Machine Coding
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Machine Coding
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../car-rental-system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Car Rental System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rate-limiter.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate Limiter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../text-editor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text Editor (Undo/Redo)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snake-game/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Snake Game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tic-tac-toe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic Tac Toe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../banking-system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Banking System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../in-memory-database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In-Memory Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meeting-room-reservation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meeting Room Reservation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File System (cd with wildcard)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File System (cd with wildcard)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📜 Problem Statement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📜 Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment &amp; Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-path-segments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📂 Supported Path Segments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wildcard-resolution-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Wildcard (*) Resolution Rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏗️ Design Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏗️ Design Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-abstractions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Abstractions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Abstractions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-filesystemnode-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. FileSystemNode (Abstract)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-directorynode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. DirectoryNode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-filenode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. FileNode
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-structures-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Data Structures Used
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Java Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 Example Walkthrough
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#failure-case-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Failure Case Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-space-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏱️ Time &amp; Space Complexity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-design-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏆 Why This Design Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📜 Problem Statement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📜 Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment &amp; Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-path-segments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📂 Supported Path Segments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wildcard-resolution-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Wildcard (*) Resolution Rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏗️ Design Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏗️ Design Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-abstractions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Abstractions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Abstractions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-filesystemnode-abstract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. FileSystemNode (Abstract)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-directorynode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. DirectoryNode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-filenode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. FileNode
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-structures-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Data Structures Used
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Java Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 Example Walkthrough
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#failure-case-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Failure Case Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-space-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏱️ Time &amp; Space Complexity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-design-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏆 Why This Design Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="design-a-file-system-cd-with-wildcard">🗂️ Design a File System (cd with <code>*</code> Wildcard)</h1>
+<h2 id="problem-statement">📜 Problem Statement</h2>
+<p>Design and implement an <strong>in-memory Unix filesystem shell</strong> that supports the following commands:</p>
+<ul>
+<li><code>mkdir &lt;path&gt;</code></li>
+<li><code>pwd</code></li>
+<li><code>cd &lt;path&gt;</code> (supports wildcard <code>*</code>)</li>
+</ul>
+<h3 id="environment-rules">Environment &amp; Rules</h3>
+<ul>
+<li>System starts at root directory <code>/</code></li>
+<li>
+<p>Paths can be:</p>
+<ul>
+<li><strong>Absolute</strong> (start with <code>/</code>)</li>
+<li><strong>Relative</strong> (start from current directory)</li>
+<li>Path separator is <code>/</code></li>
+<li>Multiple consecutive <code>/</code> are treated as one</li>
+<li>Filesystem exists <strong>only in memory</strong></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="supported-path-segments">📂 Supported Path Segments</h2>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.</code></td>
+<td>Current directory</td>
+</tr>
+<tr>
+<td><code>..</code></td>
+<td>Parent directory (root’s parent is root itself)</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>Wildcard matching <strong>exactly one segment</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="wildcard-resolution-rules">🧠 Wildcard (<code>*</code>) Resolution Rules</h2>
+<p>When <code>*</code> is encountered during <code>cd</code> traversal:</p>
+<ol>
+<li>Prefer <strong>child directories</strong></li>
+<li>If multiple children exist → pick <strong>lexicographically smallest</strong></li>
+<li>If no child directories exist → fallback to <code>.</code></li>
+<li>If still applicable → fallback to <code>..</code></li>
+</ol>
+<p>This ensures:</p>
+<ul>
+<li>Deterministic behavior</li>
+<li>No ambiguity</li>
+<li>No branching paths</li>
+</ul>
+<hr />
+<h2 id="design-overview">🏗️ Design Overview</h2>
+<h3 id="core-abstractions">Core Abstractions</h3>
+<h4 id="1-filesystemnode-abstract">1. FileSystemNode (Abstract)</h4>
+<ul>
+<li>Common base for files and directories</li>
+<li>Stores name and parent reference</li>
+</ul>
+<h4 id="2-directorynode">2. DirectoryNode</h4>
+<ul>
+<li>Contains child nodes</li>
+<li>Uses <code>TreeMap</code> to maintain lexicographic order</li>
+<li>Supports wildcard resolution</li>
+</ul>
+<h4 id="3-filenode">3. FileNode</h4>
+<ul>
+<li>Placeholder (not used heavily but keeps design extensible)</li>
+</ul>
+<hr />
+<h2 id="data-structures-used">🧩 Data Structures Used</h2>
+<div class="highlight"><pre><span></span><code>DirectoryNode
+ ├── name
+ ├── parent
+ └── TreeMap&lt;String, FileSystemNode&gt; children
+</code></pre></div>
+<ul>
+<li><code>TreeMap</code> ensures <strong>sorted traversal</strong></li>
+<li>Parent pointers allow fast <code>pwd</code> and <code>..</code> resolution</li>
+</ul>
+<hr />
+<h2 id="java-implementation">💻 Java Implementation</h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FileSystemShell</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FileSystemNode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">        </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">parent</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">FileSystemNode</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parent</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kd">abstract</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isDirectory</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">class</span> <span class="nc">FileNode</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">FileSystemNode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">FileNode</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">super</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">parent</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nd">@Override</span>
+<span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isDirectory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">class</span> <span class="nc">DirectoryNode</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">FileSystemNode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">TreeMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">FileSystemNode</span><span class="o">&gt;</span><span class="w"> </span><span class="n">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TreeMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">DirectoryNode</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">super</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">parent</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nd">@Override</span>
+<span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isDirectory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">FileSystemNode</span><span class="w"> </span><span class="nf">getChild</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">children</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">void</span><span class="w"> </span><span class="nf">addChild</span><span class="p">(</span><span class="n">FileSystemNode</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">children</span><span class="p">.</span><span class="na">putIfAbsent</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">name</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="nf">smallestChildDir</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">FileSystemNode</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">children</span><span class="p">.</span><span class="na">values</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">isDirectory</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">DirectoryNode</span><span class="p">)</span><span class="w"> </span><span class="n">node</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DirectoryNode</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">cwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">FileSystemShell</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="c1">// ================= pwd =================</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">pwd</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cwd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">FileSystemNode</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cwd</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">path</span><span class="p">.</span><span class="na">addFirst</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">name</span><span class="p">);</span>
+<span class="w">            </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">parent</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">join</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// ================= mkdir =================</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">mkdir</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">cwd</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">seg</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">seg</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">seg</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">))</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">seg</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;..&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">parent</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">parent</span><span class="p">;</span>
+<span class="w">                </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">FileSystemNode</span><span class="w"> </span><span class="n">child</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">getChild</span><span class="p">(</span><span class="n">seg</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">child</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">newDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DirectoryNode</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span><span class="w"> </span><span class="n">cur</span><span class="p">);</span>
+<span class="w">                </span><span class="n">cur</span><span class="p">.</span><span class="na">addChild</span><span class="p">(</span><span class="n">newDir</span><span class="p">);</span>
+<span class="w">                </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newDir</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">child</span><span class="p">.</span><span class="na">isDirectory</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DirectoryNode</span><span class="p">)</span><span class="w"> </span><span class="n">child</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="c1">// cannot mkdir inside file</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// ================= cd =================</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">cd</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">cwd</span><span class="p">;</span>
+<span class="w">        </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">seg</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">seg</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">seg</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">))</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">seg</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;..&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">parent</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">parent</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">seg</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">DirectoryNode</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">smallestChildDir</span><span class="p">();</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">FileSystemNode</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">getChild</span><span class="p">(</span><span class="n">seg</span><span class="p">);</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">node</span><span class="p">.</span><span class="na">isDirectory</span><span class="p">())</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">                </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DirectoryNode</span><span class="p">)</span><span class="w"> </span><span class="n">node</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">cwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="example-walkthrough">🧪 Example Walkthrough</h2>
+<div class="highlight"><pre><span></span><code>CWD: /
+pwd → /
+
+mkdir /a/b/c
+pwd → /
+
+cd a/b
+pwd → /a/b
+
+cd *
+→ moves to /a/b/c
+
+cd ../*
+→ resolves back to /a/b/c
+
+cd /*
+→ resolves to /a (lexicographically smallest child of /)
+</code></pre></div>
+<hr />
+<h2 id="failure-case-handling">⚠️ Failure Case Handling</h2>
+<ul>
+<li><code>cd /nope/*/x</code> → fails</li>
+<li>Current directory remains unchanged</li>
+<li>No partial traversal applied</li>
+</ul>
+<hr />
+<h2 id="time-space-complexity">⏱️ Time &amp; Space Complexity</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pwd</td>
+<td>O(depth)</td>
+</tr>
+<tr>
+<td>mkdir</td>
+<td>O(depth)</td>
+</tr>
+<tr>
+<td>cd</td>
+<td>O(depth × log(children))</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>O(total directories)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="why-this-design-works">🏆 Why This Design Works</h2>
+<p>✔ Deterministic wildcard resolution
+✔ Proper Unix semantics
+✔ Safe failure handling
+✔ Clean object-oriented design
+✔ Interview-grade clarity</p>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
