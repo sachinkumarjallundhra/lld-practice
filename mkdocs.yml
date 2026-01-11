@@ -13,6 +13,8 @@ nav:
       - Tic Tac Toe: machine-coding/tic-tac-toe.md
       - Banking System: machine-coding/banking-system.md
       - In-Memory Database: machine-coding/in-memory-database.md
+      - Meeting Room Reservation: machine-coding/meeting-room-reservation.md
+      - File System (cd with wildcard): machine-coding/file-system-cd-wildcard.md
 
 
 markdown_extensions:
