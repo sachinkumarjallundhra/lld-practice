@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../file-system-cd-wildcard/">
+        <link rel="prev" href="../flyweight-pattren-text-edit/">
       
       
-        <link rel="next" href="../job-scheduler/">
+        <link rel="next" href="../spreadsheet/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Fantasy Leaderboard - LLD Practice – Machine Coding</title>
+        <title>Leaderboard Fantasy Teams - LLD Practice – Machine Coding</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#design-a-leaderboard-for-fantasy-teams" class="md-skip">
+        <a href="#31-design-a-leaderboard-for-fantasy-teams" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fantasy Leaderboard
+              Leaderboard Fantasy Teams
             
           </span>
         </div>
@@ -551,37 +551,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Fantasy Leaderboard
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../fantasy-leaderboard/" class="md-nav__link">
         
   
   
@@ -597,281 +570,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#problem-statement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📜 Problem Statement
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rules-constraints" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📌 Rules &amp; Constraints
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-design-insight" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧠 Key Design Insight
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#design-overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🏗️ Design Overview
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🏗️ Design Overview">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#core-entities" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Core Entities
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Core Entities">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-player" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1️⃣ Player
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-user" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2️⃣ User
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-leaderboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3️⃣ Leaderboard
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#design-patterns-used" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧩 Design Patterns Used
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🧩 Design Patterns Used">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#observer-pattern" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ Observer Pattern
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sorted-set-treeset" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ Sorted Set (TreeSet)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#data-structures-used" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧱 Data Structures Used
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#java-implementation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        💻 Java Implementation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="💻 Java Implementation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#player" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Player
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#playerobserver-interface" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PlayerObserver Interface
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#user" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        User
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#leaderboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Leaderboard
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-walkthrough" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧪 Example Walkthrough
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#edge-cases-handled" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⚠️ Edge Cases Handled
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#time-space-complexity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⏱️ Time &amp; Space Complexity
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-this-solution-is-strong" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ Why This Solution Is Strong
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -965,10 +663,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../leaderboard-fantasy-teams/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leaderboard Fantasy Teams
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -984,6 +709,237 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📜 Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rules-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Rules &amp; Constraints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Rules &amp; Constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#team-player-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Team &amp; Player Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaderboard-ordering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leaderboard Ordering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apis-to-implement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 APIs to Implement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧩 APIs to Implement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-adduser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ addUser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-addscore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ addScore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gettopk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ getTopK
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📘 Example Walkthrough
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏗️ Design Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏗️ Design Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-entities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Entities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-pattern-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Design Pattern Used
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Design Pattern Used">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#observer-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Observer Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Java Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-cases-handled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Edge Cases Handled
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏱️ Time Complexity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-is-interview-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Why This Is Interview-Ready
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1148,18 +1104,96 @@
   <a href="#rules-constraints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📌 Rules &amp; Constraints
+        🧠 Rules &amp; Constraints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Rules &amp; Constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#team-player-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Team &amp; Player Rules
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#key-design-insight" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#leaderboard-ordering" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🧠 Key Design Insight
+        Leaderboard Ordering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apis-to-implement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 APIs to Implement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧩 APIs to Implement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-adduser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ addUser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-addscore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ addScore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gettopk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ getTopK
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📘 Example Walkthrough
       
     </span>
   </a>
@@ -1187,45 +1221,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Core Entities">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-player" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1️⃣ Player
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-user" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2️⃣ User
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-leaderboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3️⃣ Leaderboard
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
       </ul>
@@ -1234,15 +1229,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#design-patterns-used" class="md-nav__link">
+  <a href="#design-pattern-used" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🧩 Design Patterns Used
+        🧠 Design Pattern Used
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="🧩 Design Patterns Used">
+    <nav class="md-nav" aria-label="🧠 Design Pattern Used">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1256,30 +1251,8 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#sorted-set-treeset" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ Sorted Set (TreeSet)
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#data-structures-used" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧱 Data Structures Used
-      
-    </span>
-  </a>
   
 </li>
       
@@ -1288,67 +1261,6 @@
     <span class="md-ellipsis">
       
         💻 Java Implementation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="💻 Java Implementation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#player" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Player
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#playerobserver-interface" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PlayerObserver Interface
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#user" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        User
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#leaderboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Leaderboard
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-walkthrough" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧪 Example Walkthrough
       
     </span>
   </a>
@@ -1367,10 +1279,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#time-space-complexity" class="md-nav__link">
+  <a href="#time-complexity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ⏱️ Time &amp; Space Complexity
+        ⏱️ Time Complexity
       
     </span>
   </a>
@@ -1378,10 +1290,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-this-solution-is-strong" class="md-nav__link">
+  <a href="#why-this-is-interview-ready" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ✅ Why This Solution Is Strong
+        ✅ Why This Is Interview-Ready
       
     </span>
   </a>
@@ -1405,152 +1317,131 @@
 
 
 
-<h1 id="design-a-leaderboard-for-fantasy-teams">🏆 Design a Leaderboard for Fantasy Teams</h1>
+<h1 id="31-design-a-leaderboard-for-fantasy-teams">31. Design a Leaderboard for Fantasy Teams</h1>
 <h2 id="problem-statement">📜 Problem Statement</h2>
-<p>Design an <strong>in-memory leaderboard</strong> for a fantasy sports application.</p>
+<p>Build an <strong>in-memory leaderboard</strong> for a fantasy-sports application.</p>
 <ul>
 <li>Each user creates <strong>exactly one team</strong></li>
-<li>A team consists of <strong>one or more players</strong></li>
-<li>Players gain or lose points during a live match</li>
-<li>A user’s score is the <strong>sum of scores of all players in their team</strong></li>
+<li>Each team contains <strong>one or more players</strong></li>
+<li>Players earn <strong>positive or negative points</strong> over time</li>
+<li>A user’s score is the <strong>sum of scores of all players</strong> in their team</li>
 <li>The system must support <strong>Top-K leaderboard queries</strong></li>
 </ul>
 <hr />
-<h2 id="rules-constraints">📌 Rules &amp; Constraints</h2>
+<h2 id="rules-constraints">🧠 Rules &amp; Constraints</h2>
+<h3 id="team-player-rules">Team &amp; Player Rules</h3>
 <ul>
-<li>Each user has <strong>exactly one team</strong></li>
+<li>Every user has <strong>exactly one team</strong></li>
 <li>A player can belong to <strong>multiple users’ teams</strong></li>
-<li>Initial user score is <strong>0</strong></li>
+<li>Each user starts with <strong>score = 0</strong></li>
 <li>Player score updates are <strong>deltas</strong> (positive or negative)</li>
-<li>
-<p>Leaderboard sorting:</p>
+</ul>
+<h3 id="leaderboard-ordering">Leaderboard Ordering</h3>
 <ol>
-<li><strong>Total score (descending)</strong></li>
-<li><strong>UserId (lexicographically ascending)</strong></li>
+<li><strong>User score (descending)</strong></li>
+<li><strong>User ID (lexicographically ascending)</strong> as tie-breaker</li>
 </ol>
+<hr />
+<h2 id="apis-to-implement">🧩 APIs to Implement</h2>
+<h3 id="1-adduser">1️⃣ addUser</h3>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">addUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">playerIds</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Registers a new user with their team</li>
+<li><code>userId</code> is unique and non-blank</li>
+<li><code>playerIds</code> contains at least one valid player</li>
+<li>If players already have scores, user score should reflect them immediately</li>
+</ul>
+<hr />
+<h3 id="2-addscore">2️⃣ addScore</h3>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">addScore</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">playerId</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">score</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Updates a player’s cumulative score by a delta</li>
+<li>All users containing that player must have their scores updated</li>
+<li>Leaderboard ordering must stay consistent</li>
+</ul>
+<hr />
+<h3 id="3-gettopk">3️⃣ getTopK</h3>
+<div class="highlight"><pre><span></span><code><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getTopK</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>
+<p>Returns top <code>k</code> users sorted by:</p>
+<ul>
+<li>Score (descending)</li>
+<li>User ID (ascending)</li>
+<li>If <code>k</code> &gt; total users → return all users</li>
+</ul>
 </li>
 </ul>
 <hr />
-<h2 id="key-design-insight">🧠 Key Design Insight</h2>
-<p>This is a <strong>many-to-many relationship</strong>:</p>
-<ul>
-<li>One player → many users</li>
-<li>One user → many players</li>
-</ul>
-<p>Whenever a player’s score changes, <strong>all dependent users must be updated immediately</strong>.</p>
-<p>This naturally fits the <strong>Observer Design Pattern</strong>.</p>
+<h2 id="example-walkthrough">📘 Example Walkthrough</h2>
+<div class="highlight"><pre><span></span><code><span class="n">addUser</span><span class="p">(</span><span class="s">&quot;uA&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="s">&quot;p1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;p2&quot;</span><span class="o">]</span><span class="p">)</span>
+<span class="n">addUser</span><span class="p">(</span><span class="s">&quot;uB&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="s">&quot;p2&quot;</span><span class="o">]</span><span class="p">)</span>
+
+<span class="n">getTopK</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">// [&quot;uA&quot;, &quot;uB&quot;]  (both scores = 0)</span>
+
+<span class="n">addScore</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="c1">// uA = 10, uB = 10</span>
+
+<span class="n">getTopK</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">// [&quot;uA&quot;, &quot;uB&quot;]  (tie → lex order)</span>
+
+<span class="n">addScore</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+<span class="c1">// uA = 13, uB = 10</span>
+
+<span class="n">getTopK</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">// [&quot;uA&quot;]</span>
+
+<span class="n">addScore</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1">// uA = 8, uB = 5</span>
+
+<span class="n">getTopK</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1">// [&quot;uA&quot;, &quot;uB&quot;]</span>
+</code></pre></div>
 <hr />
 <h2 id="design-overview">🏗️ Design Overview</h2>
 <h3 id="core-entities">Core Entities</h3>
-<h4 id="1-player">1️⃣ Player</h4>
-<ul>
-<li>Maintains current score</li>
-<li>Knows which users depend on it</li>
-</ul>
-<h4 id="2-user">2️⃣ User</h4>
-<ul>
-<li>Represents a fantasy team</li>
-<li>Observes players</li>
-<li>Maintains total team score</li>
-</ul>
-<h4 id="3-leaderboard">3️⃣ Leaderboard</h4>
-<ul>
-<li>Maintains sorted users</li>
-<li>Supports Top-K queries efficiently</li>
-</ul>
-<hr />
-<h2 id="design-patterns-used">🧩 Design Patterns Used</h2>
-<h3 id="observer-pattern">✅ Observer Pattern</h3>
-<ul>
-<li><code>Player</code> = Subject</li>
-<li><code>User</code> = Observer</li>
-<li>Player score updates notify all users automatically</li>
-</ul>
-<h3 id="sorted-set-treeset">✅ Sorted Set (TreeSet)</h3>
-<ul>
-<li>Keeps leaderboard <strong>always sorted</strong></li>
-<li>Ensures fast Top-K retrieval</li>
-</ul>
-<hr />
-<h2 id="data-structures-used">🧱 Data Structures Used</h2>
 <table>
 <thead>
 <tr>
-<th>Structure</th>
-<th>Purpose</th>
+<th>Entity</th>
+<th>Responsibility</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>Map&lt;String, Player&gt;</code></td>
-<td>Player registry</td>
+<td><code>Player</code></td>
+<td>Holds player score &amp; notifies users</td>
 </tr>
 <tr>
-<td><code>Map&lt;String, User&gt;</code></td>
-<td>User registry</td>
+<td><code>User</code></td>
+<td>Maintains total team score</td>
 </tr>
 <tr>
-<td><code>TreeSet&lt;User&gt;</code></td>
-<td>Sorted leaderboard</td>
-</tr>
-<tr>
-<td><code>List&lt;PlayerObserver&gt;</code></td>
-<td>Observers per player</td>
+<td><code>Leaderboard</code></td>
+<td>Maintains sorted ranking</td>
 </tr>
 </tbody>
 </table>
 <hr />
+<h2 id="design-pattern-used">🧠 Design Pattern Used</h2>
+<h3 id="observer-pattern">✅ <strong>Observer Pattern</strong></h3>
+<ul>
+<li><code>User</code> observes <code>Player</code></li>
+<li>
+<p>When a player’s score changes:</p>
+<ul>
+<li>All users owning that player are notified</li>
+<li>User scores update automatically</li>
+<li>Ensures <strong>efficient many-to-many updates</strong></li>
+</ul>
+</li>
+</ul>
+<hr />
 <h2 id="java-implementation">💻 Java Implementation</h2>
-<h3 id="player">Player</h3>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nc">Player</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">playerId</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlayerObserver</span><span class="o">&gt;</span><span class="w"> </span><span class="n">observers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-
-<span class="w">    </span><span class="n">Player</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">playerId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">playerId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">playerId</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">addObserver</span><span class="p">(</span><span class="n">PlayerObserver</span><span class="w"> </span><span class="n">observer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">observers</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">observer</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">addScore</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">delta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">score</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">delta</span><span class="p">;</span>
-<span class="w">        </span><span class="n">notifyObservers</span><span class="p">(</span><span class="n">delta</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">notifyObservers</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">delta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">PlayerObserver</span><span class="w"> </span><span class="n">obs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">observers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">obs</span><span class="p">.</span><span class="na">onPlayerScoreChanged</span><span class="p">(</span><span class="n">delta</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<hr />
-<h3 id="playerobserver-interface">PlayerObserver Interface</h3>
-<div class="highlight"><pre><span></span><code><span class="kd">interface</span> <span class="nc">PlayerObserver</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">onPlayerScoreChanged</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">delta</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<hr />
-<h3 id="user">User</h3>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">PlayerObserver</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">totalScore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-
-<span class="w">    </span><span class="n">User</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">userId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userId</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onPlayerScoreChanged</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">delta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">totalScore</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">delta</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<hr />
-<h3 id="leaderboard">Leaderboard</h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
 
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Leaderboard</span><span class="w"> </span><span class="p">{</span>
@@ -1565,7 +1456,7 @@
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="na">totalScore</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="na">totalScore</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="na">totalScore</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">totalScore</span><span class="p">;</span><span class="w"> </span><span class="c1">// score DESC</span>
 <span class="w">            </span><span class="p">}</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">userId</span><span class="p">.</span><span class="na">compareTo</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="na">userId</span><span class="p">);</span><span class="w"> </span><span class="c1">// tie-break</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">userId</span><span class="p">.</span><span class="na">compareTo</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="na">userId</span><span class="p">);</span><span class="w"> </span><span class="c1">// lex ASC</span>
 <span class="w">        </span><span class="p">});</span>
 <span class="w">    </span><span class="p">}</span>
 
@@ -1589,12 +1480,12 @@
 
 <span class="w">        </span><span class="n">Player</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">players</span><span class="p">.</span><span class="na">computeIfAbsent</span><span class="p">(</span><span class="n">playerId</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Player</span><span class="p">(</span><span class="n">playerId</span><span class="p">));</span>
 
-<span class="w">        </span><span class="c1">// Remove affected users before update</span>
+<span class="w">        </span><span class="c1">// Remove affected users before score change</span>
 <span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">PlayerObserver</span><span class="w"> </span><span class="n">obs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="na">observers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="n">leaderboard</span><span class="p">.</span><span class="na">remove</span><span class="p">((</span><span class="n">User</span><span class="p">)</span><span class="w"> </span><span class="n">obs</span><span class="p">);</span>
 <span class="w">        </span><span class="p">}</span>
 
-<span class="w">        </span><span class="n">p</span><span class="p">.</span><span class="na">addScore</span><span class="p">(</span><span class="n">delta</span><span class="p">);</span><span class="w"> </span><span class="c1">// notify observers</span>
+<span class="w">        </span><span class="n">p</span><span class="p">.</span><span class="na">addScore</span><span class="p">(</span><span class="n">delta</span><span class="p">);</span><span class="w"> </span><span class="c1">// notify users</span>
 
 <span class="w">        </span><span class="c1">// Reinsert updated users</span>
 <span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">PlayerObserver</span><span class="w"> </span><span class="n">obs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="na">observers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -1615,37 +1506,63 @@
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div>
-<hr />
-<h2 id="example-walkthrough">🧪 Example Walkthrough</h2>
-<div class="highlight"><pre><span></span><code>addUser(&quot;uA&quot;, [&quot;p1&quot;, &quot;p2&quot;])
-addUser(&quot;uB&quot;, [&quot;p2&quot;])
 
-getTopK(2)
-→ [&quot;uA&quot;, &quot;uB&quot;]
+<span class="c1">// ---------- SUPPORTING CLASSES ----------</span>
 
-addScore(&quot;p2&quot;, 10)
-→ uA = 10, uB = 10
+<span class="kd">class</span> <span class="nc">Player</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">playerId</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlayerObserver</span><span class="o">&gt;</span><span class="w"> </span><span class="n">observers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
 
-addScore(&quot;p1&quot;, 3)
-→ uA = 13, uB = 10
+<span class="w">    </span><span class="n">Player</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">playerId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">playerId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">playerId</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-getTopK(1)
-→ [&quot;uA&quot;]
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">addObserver</span><span class="p">(</span><span class="n">PlayerObserver</span><span class="w"> </span><span class="n">observer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">observers</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">observer</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-addScore(&quot;p2&quot;, -5)
-→ uA = 8, uB = 5
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">addScore</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">delta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">score</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">delta</span><span class="p">;</span>
+<span class="w">        </span><span class="n">notifyObservers</span><span class="p">(</span><span class="n">delta</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">notifyObservers</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">delta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">PlayerObserver</span><span class="w"> </span><span class="n">obs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">observers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">obs</span><span class="p">.</span><span class="na">onPlayerScoreChanged</span><span class="p">(</span><span class="n">delta</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span> <span class="nc">PlayerObserver</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">onPlayerScoreChanged</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">delta</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">PlayerObserver</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">totalScore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">User</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">userId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userId</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onPlayerScoreChanged</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">delta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">totalScore</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">delta</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <hr />
 <h2 id="edge-cases-handled">⚠️ Edge Cases Handled</h2>
 <ul>
-<li>Player score updates before user registration</li>
-<li>Negative score deltas</li>
-<li>Tie-breaking using lexicographical order</li>
-<li><code>k</code> greater than number of users</li>
+<li>Player added after scoring</li>
+<li>Negative score updates</li>
+<li>Tie-breaking by user ID</li>
+<li><code>k</code> larger than user count</li>
+<li>Many-to-many player-user mapping</li>
 </ul>
 <hr />
-<h2 id="time-space-complexity">⏱️ Time &amp; Space Complexity</h2>
+<h2 id="time-complexity">⏱️ Time Complexity</h2>
 <table>
 <thead>
 <tr>
@@ -1656,35 +1573,27 @@ addScore(&quot;p2&quot;, -5)
 <tbody>
 <tr>
 <td>addUser</td>
-<td>O(p log n)</td>
+<td>O(p log u)</td>
 </tr>
 <tr>
 <td>addScore</td>
-<td>O(u log n)</td>
+<td>O(u log u)</td>
 </tr>
 <tr>
 <td>getTopK</td>
 <td>O(k)</td>
 </tr>
-<tr>
-<td>Memory</td>
-<td>O(users + players + edges)</td>
-</tr>
 </tbody>
 </table>
-<p>Where:</p>
-<ul>
-<li><code>p</code> = players per team</li>
-<li><code>u</code> = users observing a player</li>
-<li><code>n</code> = total users</li>
-</ul>
+<p><em>p = players per user, u = users affected</em></p>
 <hr />
-<h2 id="why-this-solution-is-strong">✅ Why This Solution Is Strong</h2>
-<p>✔ Clean separation of concerns
-✔ Real-time leaderboard consistency
-✔ Efficient Top-K queries
-✔ Observer pattern fits domain perfectly
-✔ Interview-grade design clarity</p>
+<h2 id="why-this-is-interview-ready">✅ Why This Is Interview-Ready</h2>
+<ul>
+<li>Clean <strong>Observer pattern usage</strong></li>
+<li>Deterministic ranking with <code>TreeSet</code></li>
+<li>Efficient updates without full recomputation</li>
+<li>Easily extensible (Top-N per league, snapshots, persistence)</li>
+</ul>
 <hr />
 
 
