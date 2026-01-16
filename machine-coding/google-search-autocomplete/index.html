@@ -1,0 +1,1652 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Low Level Design problems with clean explanations and Java solutions">
+      
+      
+      
+      
+        <link rel="prev" href="../parking-lot/">
+      
+      
+        <link rel="next" href="../meeting-room-scheduler/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Google Search Autocomplete - LLD Practice – Machine Coding</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#10642-design-google-search-autocomplete" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LLD Practice – Machine Coding" class="md-header__button md-logo" aria-label="LLD Practice – Machine Coding" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LLD Practice – Machine Coding
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Google Search Autocomplete
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LLD Practice – Machine Coding" class="md-nav__button md-logo" aria-label="LLD Practice – Machine Coding" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LLD Practice – Machine Coding
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Machine Coding
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Machine Coding
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../car-rental-system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Car Rental System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rate-limiter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate Limiter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../text-editor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text Editor (Undo/Redo)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snake-game/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Snake Game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tic-tac-toe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic Tac Toe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../banking-system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Banking System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../in-memory-database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In-Memory Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meeting-room-reservation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meeting Room Reservation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../movie-ticket-booking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Movie Ticket Booking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file-system-cd-wildcard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File System (cd with wildcard)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fantasy-leaderboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fantasy Leaderboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../job-scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Job Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../text-editor-word-processor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text Editor Word Processor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flyweight-pattren-text-edit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flyweight Pattern Text Edit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../leaderboard-fantasy-teams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leaderboard Fantasy Teams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../train-platform-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Train Platform Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-queue-pub-sub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Single Queue Pub Sub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rate-limiter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate Limiter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-hashmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Hashmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parking-lot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parking Lot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google Search Autocomplete
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google Search Autocomplete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📜 Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autocomplete-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 Autocomplete Rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Design Approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Design Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-trie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Trie?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-structures-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Data Structures Used
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏗️ Class Design
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Java Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complexity-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏱️ Complexity Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-patterns-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Design Patterns Used
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interview-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 Interview Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meeting-room-scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meeting Room Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meeting-room-scheduler-recurrent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meeting Room Scheduler Recurrent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_24" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_24" id="__nav_2_24_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spreadsheet
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_24">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Spreadsheet
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spreadsheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Basic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spreadsheet-flyweight/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flyweight Optimized
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📜 Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autocomplete-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 Autocomplete Rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Design Approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Design Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-trie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Trie?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-structures-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Data Structures Used
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏗️ Class Design
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Java Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complexity-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏱️ Complexity Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-patterns-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Design Patterns Used
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interview-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 Interview Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="10642-design-google-search-autocomplete">10642. Design Google Search Autocomplete</h1>
+<h2 id="problem-statement">📜 Problem Statement</h2>
+<p>Design an <strong>autocomplete system</strong> similar to Google Search.</p>
+<p>As the user types characters one by one, the system should return <strong>top 3 historical search sentences</strong> that start with the current prefix.</p>
+<p>When the user types <code>#</code>, the current input is considered <strong>complete</strong> and should be stored as a new historical sentence.</p>
+<hr />
+<h2 id="autocomplete-rules">🔍 Autocomplete Rules</h2>
+<ul>
+<li>Popularity = number of times a sentence was previously entered</li>
+<li>
+<p>Suggestions are sorted by:</p>
+<ol>
+<li><strong>Highest frequency first</strong></li>
+<li><strong>ASCII order (lexicographically ascending)</strong> if frequencies tie</li>
+<li>Return <strong>at most 3 sentences</strong></li>
+<li>If fewer than 3 matches exist, return all</li>
+<li>
+<p>When <code>#</code> is typed:</p>
+</li>
+<li>
+<p>Save the current sentence with frequency <code>+1</code></p>
+</li>
+<li>Reset input</li>
+<li>Return empty list</li>
+</ol>
+</li>
+</ul>
+<hr />
+<h2 id="design-approach">🧠 Design Approach</h2>
+<h3 id="why-trie">Why Trie?</h3>
+<ul>
+<li>Efficient prefix search</li>
+<li>Naturally supports incremental character input</li>
+<li>Each prefix node maintains frequency info for all sentences passing through it</li>
+</ul>
+<hr />
+<h2 id="data-structures-used">🧩 Data Structures Used</h2>
+<table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trie</td>
+<td>Prefix matching</td>
+</tr>
+<tr>
+<td>HashMap</td>
+<td>Store sentence → frequency</td>
+</tr>
+<tr>
+<td>PriorityQueue</td>
+<td>Extract top-3 suggestions</td>
+</tr>
+<tr>
+<td>StringBuilder</td>
+<td>Track current user input</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="class-design">🏗️ Class Design</h2>
+<div class="highlight"><pre><span></span><code>SearchAutocomplete
+ ├── TrieNode
+ │    ├── children : Map&lt;Character, TrieNode&gt;
+ │    └── sentenceCount : Map&lt;String, Integer&gt;
+ ├── root : TrieNode
+ ├── currentNode : TrieNode
+ └── currentInput : StringBuilder
+</code></pre></div>
+<hr />
+<h2 id="example">🧪 Example</h2>
+<div class="highlight"><pre><span></span><code><span class="n">SearchAutocomplete</span><span class="w"> </span><span class="n">autocomplete</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">SearchAutocomplete</span><span class="p">(</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="s">&quot;hello world&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hi there&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hi world&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="n">autocomplete</span><span class="p">.</span><span class="na">getSuggestions</span><span class="p">(</span><span class="sc">&#39;h&#39;</span><span class="p">);</span>
+<span class="c1">// [&quot;hello world&quot;, &quot;hi there&quot;, &quot;hello&quot;]</span>
+
+<span class="n">autocomplete</span><span class="p">.</span><span class="na">getSuggestions</span><span class="p">(</span><span class="sc">&#39;i&#39;</span><span class="p">);</span>
+<span class="c1">// [&quot;hi there&quot;, &quot;hi world&quot;]</span>
+
+<span class="n">autocomplete</span><span class="p">.</span><span class="na">getSuggestions</span><span class="p">(</span><span class="sc">&#39; &#39;</span><span class="p">);</span>
+<span class="c1">// []</span>
+
+<span class="n">autocomplete</span><span class="p">.</span><span class="na">getSuggestions</span><span class="p">(</span><span class="sc">&#39;#&#39;</span><span class="p">);</span>
+<span class="c1">// []</span>
+</code></pre></div>
+<hr />
+<h2 id="java-implementation">💻 Java Implementation</h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SearchAutocomplete</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// ================= Trie Node =================</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TrieNode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">TrieNode</span><span class="o">&gt;</span><span class="w"> </span><span class="n">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sentenceCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">TrieNode</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TrieNode</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">TrieNode</span><span class="w"> </span><span class="n">currentNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">currentInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringBuilder</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">SearchAutocomplete</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">sentences</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">times</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">sentences</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">insert</span><span class="p">(</span><span class="n">sentences</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">times</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Insert sentence into Trie</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">insert</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">sentence</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">TrieNode</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">sentence</span><span class="p">.</span><span class="na">toCharArray</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="na">children</span><span class="p">.</span><span class="na">computeIfAbsent</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TrieNode</span><span class="p">());</span>
+<span class="w">            </span><span class="n">node</span><span class="p">.</span><span class="na">sentenceCount</span><span class="p">.</span><span class="na">put</span><span class="p">(</span>
+<span class="w">                </span><span class="n">sentence</span><span class="p">,</span>
+<span class="w">                </span><span class="n">node</span><span class="p">.</span><span class="na">sentenceCount</span><span class="p">.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">count</span>
+<span class="w">            </span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Process one character input</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getSuggestions</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">ch</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="c1">// End of sentence</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ch</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;#&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">sentence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">currentInput</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+<span class="w">            </span><span class="n">insert</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">            </span><span class="c1">// reset state</span>
+<span class="w">            </span><span class="n">currentInput</span><span class="p">.</span><span class="na">setLength</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">            </span><span class="n">currentNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Collections</span><span class="p">.</span><span class="na">emptyList</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">currentInput</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">ch</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">currentNode</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">currentNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">currentNode</span><span class="p">.</span><span class="na">children</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">ch</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">currentNode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Collections</span><span class="p">.</span><span class="na">emptyList</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getTop3</span><span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="na">sentenceCount</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Get top 3 sentences by frequency + lex order</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getTop3</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PriorityQueue</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="w">            </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">freq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">freq</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">freq</span><span class="p">;</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">compareTo</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">pq</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">map</span><span class="p">.</span><span class="na">keySet</span><span class="p">());</span>
+
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">pq</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">result</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">pq</span><span class="p">.</span><span class="na">poll</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="complexity-analysis">⏱️ Complexity Analysis</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insert sentence</td>
+<td><code>O(L)</code></td>
+</tr>
+<tr>
+<td>getSuggestions</td>
+<td><code>O(K log K)</code> (K = candidates at prefix)</td>
+</tr>
+<tr>
+<td>Space</td>
+<td><code>O(total characters in sentences)</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="design-patterns-used">🧠 Design Patterns Used</h2>
+<ul>
+<li><strong>Trie (Prefix Tree)</strong></li>
+<li><strong>Heap (Priority Queue)</strong></li>
+<li><strong>Incremental State Machine</strong> (character-by-character input)</li>
+</ul>
+<hr />
+<h2 id="interview-notes">🎯 Interview Notes</h2>
+<ul>
+<li>Very common <strong>Google / Meta / Amazon</strong> autocomplete problem</li>
+<li>
+<p>Follow-ups often include:</p>
+<ul>
+<li>Limit memory per node</li>
+<li>Distributed autocomplete</li>
+<li>Real-time trending queries</li>
+<li>Thread-safe version</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
